@@ -1,0 +1,53 @@
+* {
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+    border: none;
+
+    font-size: 12pt;
+    font-family: sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: row;
+}
+
+#side-menu, main {
+    padding: 20px;
+}
+
+#side-menu {
+    width: 200px;
+    max-width: 25vw;
+    height: 100vh;
+
+    color: white;
+    background-color: black;
+}
+
+.nav-item {
+    list-style-type: none;
+}
+
+main {
+    margin: auto;
+
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    margin: auto;
+    font-size: 16pt;
+}
+
+h2 {
+    font-size: 14pt;
+}
+
+.divider {
+    width: 50vw;
+    border-top: 3px solid black;
+}
