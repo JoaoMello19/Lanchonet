@@ -1,0 +1,16 @@
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    width: 450px;
+    margin: auto;
+    padding: 15px;
+
+    border: var(--default-border);
+}
+
+input[type="text"],
+input[type="password"] {
+    border: var(--default-border);
+}

@@ -18,9 +18,20 @@
             <li class="nav-item">Page 5</li>
         </ul>
     </nav> -->
+
     <main>
         <h1>LanchoNet</h1>
         <hr class="divider">
+
+        <form action="/login" method="POST">
+            <label for="username">Usuário:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Login</button>
+        </form>
     </main>
 </body>
 </html>
