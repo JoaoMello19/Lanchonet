@@ -2,6 +2,9 @@ const express = require('express');
 const session = require('express-session');
 const app = express();
 
+const { validateSession } = require('./middlewares');
+const { validateEmployee, getEmployeeByUsername } = require('./database/connector');
+
 const PORT = 3000;
 
 app.set('view engine', 'ejs');
@@ -15,7 +18,7 @@ app.use(session({
 }));
 
 app.get('/', (req, res) => {
-    if (req.session.username)
+    if (req.session.employee)
         return res.redirect('/products');
 
     const error = req.session.error;
@@ -23,11 +26,11 @@ app.get('/', (req, res) => {
     res.render('index', { error });
 });
 
-app.post('/login', (req, res) => {
+app.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
-    if (username === 'admin' && password === 'password') {
-        req.session.username = username;
+    if (await validateEmployee(username, password)) {
+        req.session.employee = await getEmployeeByUsername(username);
         res.redirect('/products');
     } else {
         req.session.error = 'Credenciais inválidas!'
@@ -35,17 +38,11 @@ app.post('/login', (req, res) => {
     }
 });
 
-app.get('/products', (req, res) => {
-    if (!req.session.username)
-        return res.redirect('/');
-
+app.get('/products', validateSession, (req, res) => {
     res.render('products');
 });
 
-app.get('/addproduct', (req, res) => {
-    if (!req.session.username)
-        return res.redirect('/');
-
+app.get('/addproduct', validateSession, (req, res) => {
     res.render('addproduct');
 });
 

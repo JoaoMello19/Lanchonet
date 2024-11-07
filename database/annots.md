@@ -1,29 +1,46 @@
 # Tabelas
 
-## 1. Produto
+## Funcionario
+- ID
+- nome
+- usuario
+- senha
+
+## Pedido
+- ID
+- cliente
+- endereco
+- total
+- forma_pgto
+- status
+
+## Produto
 - ID
 - nome
 - preco
 - descricao
 
-## 2. Pessoa
-- ID
-- nome
-- categoria
-- usuario
-- senha
-
-## 2. Pedido
-- ID
-- ID_cliente
-- data_hora
-- nome_cliente
-- endereco
-- forma_pgto
-- total
-
-## 3. Produto_Pedido
+## Produto_Pedido
 - ID_produto
 - ID_pedido
 - quantidade
 - observacao
+- subtotal
+
+# Instalar e Configurar
+
+## Instalar
+sudo apt update
+sudo apt install postgresql postgresql-contrib
+
+# Iniciar
+sudo service postgresql start
+
+# Executar
+sudo -u postgres psql
+
+CREATE DATABASE seu_banco;
+CREATE USER seu_usuario WITH ENCRYPTED PASSWORD 'sua_senha';
+GRANT ALL PRIVILEGES ON DATABASE seu_banco TO seu_usuario;
+
+\q
