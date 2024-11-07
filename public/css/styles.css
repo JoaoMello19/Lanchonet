@@ -23,6 +23,10 @@ body {
 }
 
 #side-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
     width: 200px;
     max-width: 25vw;
     height: 100vh;
@@ -31,19 +35,33 @@ body {
     background-color: black;
 }
 
+#page-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
 .nav-item {
     list-style-type: none;
 }
 
+.nav-item a {
+    color: white;
+    text-decoration: none;
+}
+
 main {
-    margin: auto;
+    height: fit-content;
+    width: calc(100% - 200px);
+    min-width: 75vw;
 
     display: flex;
     flex-direction: column;
 }
 
 h1 {
-    margin: auto;
+    margin: 0 auto;
     font-size: 16pt;
 }
 
@@ -52,7 +70,33 @@ h2 {
 }
 
 .divider {
-    width: 50vw;
+    width: 100%;
     margin: 20px auto;
     border-top: 3px solid black;
+}
+
+#menu-divider {
+    border-color: white;
+}
+
+input[type="text"],
+input[type="password"] {
+    padding: 5px;
+    border: var(--default-border);
+}
+
+input[type="submit"] {
+    width: 60%;
+    
+    margin: 10px auto;
+    padding: 10px;
+    
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+.error-msg {
+    margin: auto;
+    color: red;
 }

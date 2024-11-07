@@ -1,36 +1,26 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/styles.css">
+    <%- include('partials/header') %>
     <link rel="stylesheet" href="/css/index.css">
-    <title>LanchoNet</title>
 </head>
 <body>
-    <!-- <nav id="side-menu">
-        <h2>Menu</h2>
-        <ul id="pages-links">
-            <li class="nav-item">Page 1</li>
-            <li class="nav-item">Page 2</li>
-            <li class="nav-item">Page 3</li>
-            <li class="nav-item">Page 4</li>
-            <li class="nav-item">Page 5</li>
-        </ul>
-    </nav> -->
-
     <main>
         <h1>LanchoNet</h1>
         <hr class="divider">
 
         <form action="/login" method="POST">
             <label for="username">Usuário:</label>
-            <input type="text" id="username" name="username" required>
+            <input type="text" id="username" name="username" autocomplete="off" required>
 
             <label for="password">Senha:</label>
             <input type="password" id="password" name="password" required>
 
-            <button type="submit">Login</button>
+            <input type="submit" value="Login"></button>
+
+            <% if (error) { %>
+                <p class="error-msg"><%= error %></p>
+            <% } %>
         </form>
     </main>
 </body>
