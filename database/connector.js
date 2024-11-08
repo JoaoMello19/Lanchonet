@@ -64,6 +64,17 @@ async function insertProduct({ name, price, description }) {
     return res.rows[0].product_id;
 }
 
+async function updateProduct(product_id, { name, price, description }) {
+    const query = `
+    UPDATE product
+    SET name = $2, price = $3, description = $4
+    WHERE product_id = $1;
+    `;
+
+    const values = [ product_id, name, price, description ];
+    await pool.query(query, values);
+}
+
 async function getProduct(product_id) {
     const query = `SELECT * FROM product WHERE product_id = $1;`;
 
@@ -124,6 +135,7 @@ module.exports = {
     validateEmployee,
 
     insertProduct,
+    updateProduct,
     getProduct,
     searchProducts,
     getAllProducts,

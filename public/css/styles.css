@@ -98,7 +98,7 @@ textarea,
     border: var(--default-border);
 }
 
-input[type="submit"] {
+input[type="submit"], button {
     width: 60%;
     
     margin: 10px auto;

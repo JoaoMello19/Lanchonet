@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <%- include('partials/header') %>
+    <link rel="stylesheet" type="text/css" href="/css/editproduct.css">
+</head>
+<body>
+    <%- include('partials/navbar') %>
+    
+    <main>
+        <h1>Informações dobre o Produto</h1>
+        <hr class="divider">
+
+        <form action="/updateproduct" method="POST">
+            <input type="hidden" name="id" value="<%= product_id %>">
+            
+            <label for="name">Nome do Produto:</label>
+            <input type="text" id="name" name="name" autocomplete="off" value="<%= name %>" required disabled>
+
+            <label for="price">Preço do Produto:</label>
+            <input type="number" id="price" name="price" step="0.01" min="0" value="<%= price %>" required disabled>
+
+            <label for="description">Descrição:</label>
+            <textarea type="number" id="description" name="description" disabled><%= description %></textarea>
+
+            <button id="btn-edit">Editar</button>
+
+            <div id="btn-row">
+                <button id="btn-cancel">Cancelar</button>
+                <input type="submit" value="Salvar Produto">
+            </div>
+        </form>
+    </main>
+
+    <script>
+        // Seleciona os elementos necessários
+        const editButton = document.getElementById('btn-edit');
+        const cancelButton = document.getElementById('btn-cancel');
+        const btnRow = document.getElementById('btn-row');
+        const inputs = document.querySelectorAll('#name, #price, #description');
+    
+        // Função para habilitar os campos e exibir os botões de ação
+        editButton.addEventListener('click', (evt) => {
+            evt.preventDefault();
+            inputs.forEach(input => input.disabled = false);  // Habilita os campos
+            btnRow.style.display = 'flex';  // Exibe a linha com "Cancelar" e "Salvar Produto"
+            editButton.style.display = 'none';  // Oculta o botão "Editar"
+        });
+    
+        // Função para recarregar a página ao clicar em "Cancelar"
+        cancelButton.addEventListener('click', (evt) => {
+            evt.preventDefault();
+            window.location.href = '/products';  // Redireciona para a rota /editproduct
+        });
+    </script>
+</body>
+</html>

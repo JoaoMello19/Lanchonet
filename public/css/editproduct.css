@@ -1,0 +1,5 @@
+#btn-row {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+}

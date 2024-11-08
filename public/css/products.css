@@ -34,3 +34,8 @@
 .prod-price {
     font-weight: bold;
 }
+
+.product-link {
+    text-decoration: none;
+    color: inherit;
+}

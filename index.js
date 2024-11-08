@@ -3,7 +3,7 @@ const session = require('express-session');
 const app = express();
 
 const { validateSession } = require('./middlewares');
-const { validateEmployee, getEmployeeByUsername, insertProduct, getAllProducts } = require('./database/connector');
+const { validateEmployee, getEmployeeByUsername, insertProduct, updateProduct, getProduct, getAllProducts } = require('./database/connector');
 
 const PORT = 3000;
 
@@ -41,11 +41,13 @@ app.post('/login', async (req, res) => {
     }
 });
 
+/** ======= ROTAS RELACIONADAS A PRODUTOS ======= */
 app.get('/products', validateSession, async (req, res) => {
     const products = await getAllProducts();
     console.log('Products:', products);
     res.render('products', { products });
 });
+
 
 app.get('/addproduct', validateSession, (req, res) => {
     res.render('addproduct');
@@ -65,6 +67,30 @@ app.post('/addproduct', validateSession, async (req, res) => {
     const productId = await insertProduct(newProduct);
 
     res.redirect('/addproduct');
+});
+
+
+app.get('/editproduct/:id', validateSession, async (req, res) => {
+    const { id } = req.params;
+    const product = await getProduct(id);
+    console.log('Produto:', product);
+    res.render('editproduct', { ...product });
+});
+
+app.post('/updateproduct', validateSession, async (req, res) => {
+    const { id, name, price, description } = req.body;
+    console.log('Atualizando produto:', { id, name, price, description });
+
+    const updatedProduct = {
+        name: name.trim().replace(/\s+/g, ' '),
+        price: parseFloat(price),
+        description: description.trim()
+    };
+    console.log('Atualizando produto formatado:', updatedProduct);
+
+    await updateProduct(id, updatedProduct);
+
+    res.redirect('/products');
 });
 
 app.get('/logout', (req, res) => {
