@@ -3,7 +3,7 @@ const session = require('express-session');
 const app = express();
 
 const { validateSession } = require('./middlewares');
-const { validateEmployee, getEmployeeByUsername } = require('./database/connector');
+const { validateEmployee, getEmployeeByUsername, insertProduct, getAllProducts } = require('./database/connector');
 
 const PORT = 3000;
 
@@ -17,33 +17,60 @@ app.use(session({
     cookie: { maxAge: 300000 }
 }));
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
     if (req.session.employee)
         return res.redirect('/products');
 
-    const error = req.session.error;
+    const { error, username } = req.session;
     delete req.session.error;
-    res.render('index', { error });
+    delete req.session.username;
+    res.render('index', { error, username });
 });
 
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
+    console.log('Credenciais:', { username, password });
 
     if (await validateEmployee(username, password)) {
         req.session.employee = await getEmployeeByUsername(username);
         res.redirect('/products');
     } else {
-        req.session.error = 'Credenciais inválidas!'
+        req.session.error = 'Credenciais inválidas!';
+        req.session.username = username;
         res.redirect('/');
     }
 });
 
-app.get('/products', validateSession, (req, res) => {
-    res.render('products');
+app.get('/products', validateSession, async (req, res) => {
+    const products = await getAllProducts();
+    console.log('Products:', products);
+    res.render('products', { products });
 });
 
 app.get('/addproduct', validateSession, (req, res) => {
     res.render('addproduct');
+});
+
+app.post('/addproduct', validateSession, async (req, res) => {
+    const { name, price, description } = req.body;
+    console.log('Novo produto:', { name, price, description });
+
+    const newProduct = {
+        name: name.trim().replace(/\s+/g, ' '),
+        price: parseFloat(price),
+        description: description.trim().replace(/[ \t]+/g, ' ')
+    };
+    console.log('Novo produto formatado:', newProduct);
+
+    const productId = await insertProduct(newProduct);
+
+    res.redirect('/addproduct');
+});
+
+app.get('/logout', (req, res) => {
+    req.session.destroy(() => {
+        res.redirect('/');
+    });
 });
 
 app.listen(PORT, (req, res) => {

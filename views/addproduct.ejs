@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <%- include('partials/header') %>
-    <link rel="stylesheet" href="/css/addproduct.css">
+    <link rel="stylesheet" type="text/css" href="/css/addproduct.css">
 </head>
 <body>
     <%- include('partials/navbar') %>
@@ -11,21 +11,17 @@
         <h1>Adicionar Produto</h1>
         <hr class="divider">
 
-        <form action="/inserproduct">
-            <label for="productname">Nome do Produto:</label>
-            <input type="text" id="productname" name="productname" autocomplete="off" required>
+        <form action="/addproduct" method="POST">
+            <label for="name">Nome do Produto:</label>
+            <input type="text" id="name" name="name" autocomplete="off" required>
 
-            <label for="productprice">Preço do Produto:</label>
-            <input type="number" id="productprice" name="productprice" required>
+            <label for="price">Preço do Produto:</label>
+            <input type="number" id="price" name="price" step="0.01" min="0" required>
 
-            <label for="productdescription">Descrição:</label>
-            <textarea type="number" id="productdescription" name="productdescription" required>
+            <label for="description">Descrição:</label>
+            <textarea type="number" id="description" name="description" required></textarea>
 
-            <input type="submit" value="Adicionar Produto"></button>
-
-            <% if (error) { %>
-                <p class="error-msg"><%= error %></p>
-            <% } %>
+            <input type="submit" value="Adicionar Produto">
         </form>
     </main>
 </body>

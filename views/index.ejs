@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <%- include('partials/header') %>
-    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
 </head>
 <body>
     <main>
@@ -11,12 +11,12 @@
 
         <form action="/login" method="POST">
             <label for="username">Usuário:</label>
-            <input type="text" id="username" name="username" autocomplete="off" required>
+            <input type="text" id="username" name="username" autocomplete="off" required value="<%= username %>">
 
             <label for="password">Senha:</label>
             <input type="password" id="password" name="password" required>
 
-            <input type="submit" value="Login"></button>
+            <input type="submit" value="Login">
 
             <% if (error) { %>
                 <p class="error-msg"><%= error %></p>

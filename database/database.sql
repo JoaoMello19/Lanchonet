@@ -28,9 +28,9 @@ CREATE TABLE product (
 CREATE TABLE product_order (
     product_id INT REFERENCES product (product_id) ON DELETE CASCADE,
     order_id   INT REFERENCES orders (order_id) ON DELETE CASCADE,
-    quantidade INT NOT NULL,
-    amount     TEXT,
+    amount     INT NOT NULL,
+    notes      TEXT,
     subtotal   DECIMAL(10, 2) NOT NULL,
-    
+
     PRIMARY KEY (product_id, order_id)
 );

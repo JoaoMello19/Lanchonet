@@ -6,7 +6,13 @@ const pool = new Pool({
     database: 'lanchonetdb',
     password: 'admin123',
     port: 5432,
+    searchPath: ['public']
 });
+
+async function testDB() {
+    const res = await pool.query("SELECT * FROM information_schema.tables WHERE table_schema = 'public';");
+    console.log('Resultado:', res.rows);
+}
 
 /** ----- EMPLOYEE ----- */
 async function insertEmployee({ name, username, password }) {
@@ -22,7 +28,7 @@ async function insertEmployee({ name, username, password }) {
 }
 
 async function getEmployeeById(employee_id) {
-    const query = `SELECT employee_id, name, username FROM employee WHERE employee_id = $1;`;
+    const query = `SELECT employee_id, name, username FROM public.employee WHERE employee_id = $1;`;
 
     const values = [ employee_id ];
     const res = await pool.query(query, values);
@@ -30,7 +36,7 @@ async function getEmployeeById(employee_id) {
 }
 
 async function getEmployeeByUsername(username) {
-    const query = `SELECT employee_id, name, username FROM employee WHERE username = $1;`;
+    const query = `SELECT employee_id, name, username FROM public.employee WHERE username = $1;`;
 
     const values = [ username ];
     const res = await pool.query(query, values);
@@ -38,7 +44,7 @@ async function getEmployeeByUsername(username) {
 }
 
 async function validateEmployee(username, password) {
-    const query = `SELECT * FROM employee WHERE username = $1 AND password = $2;`;
+    const query = `SELECT * FROM public.employee WHERE username = $1 AND password = $2;`;
 
     const values = [ username, password ];
     const res = await pool.query(query, values);
@@ -64,6 +70,21 @@ async function getProduct(product_id) {
     const values = [ product_id ];
     const res = await pool.query(query, values);
     return res.rows[0];
+}
+
+async function searchProducts(product_name) {
+    const query = `SELECT * FROM product WHERE name LIKE '%$1%';`;
+
+    const values = [ product_name ];
+    const res = await pool.query(query, values);
+    return res.rows[0];
+}
+
+async function getAllProducts(product_name) {
+    const query = `SELECT * FROM product;`;
+
+    const res = await pool.query(query);
+    return res.rows;
 }
 
 /** ----- ORDER ----- */
@@ -95,7 +116,17 @@ async function insertOrder({ employee_id, products }) {
 
 
 module.exports = {
-    validateEmployee,
+    testDB,
+
+    insertEmployee,
     getEmployeeById,
-    getEmployeeByUsername
+    getEmployeeByUsername,
+    validateEmployee,
+
+    insertProduct,
+    getProduct,
+    searchProducts,
+    getAllProducts,
+
+    insertOrder
 }

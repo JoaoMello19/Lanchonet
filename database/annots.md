@@ -38,9 +38,15 @@ sudo service postgresql start
 
 # Executar
 sudo -u postgres psql
+psql -U joaomello -d lanchonetdb -h localhost
 
+
+~~~sql
 CREATE DATABASE seu_banco;
 CREATE USER seu_usuario WITH ENCRYPTED PASSWORD 'sua_senha';
 GRANT ALL PRIVILEGES ON DATABASE seu_banco TO seu_usuario;
+ALTER SCHEMA public OWNER TO joaomello;
+ALTER DATABASE lanchonetdb OWNER TO joaomello;
+~~~
 
 \q
