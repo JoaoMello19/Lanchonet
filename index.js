@@ -41,13 +41,12 @@ app.post('/login', async (req, res) => {
     }
 });
 
-/** ======= ROTAS RELACIONADAS A PRODUTOS ======= */
+/** ========================= ROTAS RELACIONADAS A PRODUTOS ========================= */
 app.get('/products', validateSession, async (req, res) => {
     const products = await getAllProducts();
-    console.log('Products:', products);
+    console.log('Products:', JSON.stringify(products));
     res.render('products', { products });
 });
-
 
 app.get('/addproduct', validateSession, (req, res) => {
     res.render('addproduct');
@@ -68,7 +67,6 @@ app.post('/addproduct', validateSession, async (req, res) => {
 
     res.redirect('/addproduct');
 });
-
 
 app.get('/editproduct/:id', validateSession, async (req, res) => {
     const { id } = req.params;
@@ -92,6 +90,18 @@ app.post('/updateproduct', validateSession, async (req, res) => {
 
     res.redirect('/products');
 });
+
+/** ========================= ROTAS RELACIONADAS A PEDIDOS ========================= */
+app.get('/orders', validateSession, async (req, res) => {
+    // Implementar aqui a lógica para listar pedidos
+    console.log('Pedidos:', []);
+    res.render('orders');
+});
+
+app.get('/addorder', validateSession, async (req, res) => {
+    const products = await getAllProducts();
+    res.render('addorder', { products });
+})
 
 app.get('/logout', (req, res) => {
     req.session.destroy(() => {

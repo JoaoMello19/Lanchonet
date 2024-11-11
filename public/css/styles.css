@@ -27,7 +27,7 @@ body {
     flex-direction: column;
     align-items: center;
 
-    width: 200px;
+    width: 250px;
     max-width: 25vw;
     height: 100vh;
 
@@ -35,7 +35,7 @@ body {
     background-color: black;
 }
 
-#page-links {
+.page-links {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -62,11 +62,11 @@ main {
 
 h1 {
     margin: 0 auto;
-    font-size: 16pt;
+    font-size: 20pt;
 }
 
 h2 {
-    font-size: 14pt;
+    font-size: 16pt;
 }
 
 .divider {
@@ -93,7 +93,9 @@ form {
 
 input:not([type="submit"]),
 textarea,
-.product-card {
+.product-card,
+select,
+#items-list {
     padding: 5px;
     border: var(--default-border);
 }

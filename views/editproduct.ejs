@@ -6,7 +6,7 @@
 </head>
 <body>
     <%- include('partials/navbar') %>
-    
+
     <main>
         <h1>Informações dobre o Produto</h1>
         <hr class="divider">
@@ -38,7 +38,7 @@
         const cancelButton = document.getElementById('btn-cancel');
         const btnRow = document.getElementById('btn-row');
         const inputs = document.querySelectorAll('#name, #price, #description');
-    
+
         // Função para habilitar os campos e exibir os botões de ação
         editButton.addEventListener('click', (evt) => {
             evt.preventDefault();
@@ -46,11 +46,11 @@
             btnRow.style.display = 'flex';  // Exibe a linha com "Cancelar" e "Salvar Produto"
             editButton.style.display = 'none';  // Oculta o botão "Editar"
         });
-    
+
         // Função para recarregar a página ao clicar em "Cancelar"
         cancelButton.addEventListener('click', (evt) => {
             evt.preventDefault();
-            window.location.href = '/products';  // Redireciona para a rota /editproduct
+            window.location.href = '/products';  // Redireciona para a rota /products
         });
     </script>
 </body>

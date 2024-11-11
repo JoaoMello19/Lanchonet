@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <%- include('partials/header') %>
+    <link rel="stylesheet" type="text/css" href="/css/addorder.css">
+</head>
+<body>
+    <%- include('partials/navbar') %>
+
+    <main>
+        <h1>Adicionar Pedido</h1>
+        <hr class="divider">
+
+        <form action="/addorder" method="POST">
+            <!-- Informações do Cliente -->
+            <label for="name">Nome do Cliente:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="address">Endereço:</label>
+            <input type="text" id="address" name="address" required>
+
+            <!-- Seção de Pedidos -->
+            <div class="order-item">
+                <h2>Itens do Pedido</h2>
+                <label>Item do Pedido:</label>
+                <select id="item-selector" required>
+                    <option value="" disabled selected>Selecione um produto</option>
+                    <% products.forEach(product => { %>
+                        <option value="<%= product.product_id %>"><%= product.name %></option>
+                    <% }); %>
+                </select>
+
+                <label for="note">Observação:</label>
+                <input type="text" id="note">
+
+                <label for="amount">Quantidade:</label>
+                <input type="number" id="amount" min="1" required>
+
+                <button id="btn-add">Adicionar</button>
+            </div>
+
+            <input type="hidden" name="items">
+            <input type="submit" value="Enviar Pedido">
+        </form>
+
+        <section id="items-list">
+        </section>
+    </main>
+
+    <script>
+        function addToList() {
+            // Obtém os valores dos inputs
+            const item = document.getElementById('item-selector');
+            const note = document.getElementById('note');
+            const amount = document.getElementById('amount');
+
+            // Valida se todos os inputs estão preenchidos
+            if (item.value === "" || note.value === "" || amount.value === "") {
+                alert("Preencha todos os campos.");
+                return;
+            }
+
+            // Cria um novo item com os valores dos inputs
+            const newItem = {
+                product_id: item.value,
+                note: note.value,
+                amount: parseInt(amount.value)
+            };
+
+            // Adiciona o item à lista
+            const itemsList = document.getElementById('items-list');
+            const itemElement = document.createElement('div');
+            itemElement.classList.add('item');
+
+            const productName = document.createElement('p');
+            productName.textContent = products.find(product => product.product_id === newItem.product_id).name;
+        }
+    </script>
+</body>
+</html>
